@@ -1,5 +1,6 @@
 module.exports = {
   target: 'node',
+  name: 'node-express',
   entry: './src/index.js',
   module: {
     rules: [
