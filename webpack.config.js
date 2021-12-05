@@ -1,5 +1,6 @@
 module.exports = {
   target: 'node',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   name: 'node-express',
   entry: './src/index.js',
   module: {
