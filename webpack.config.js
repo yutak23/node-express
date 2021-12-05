@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   target: 'node',
@@ -25,4 +26,5 @@ module.exports = {
       },
     ],
   },
+  plugins: [new ESLintPlugin({ exclude: 'node_modules' })],
 };
