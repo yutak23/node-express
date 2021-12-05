@@ -1,7 +1,9 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   target: 'node',
+  externals: [nodeExternals()],
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   name: 'node-express',
   entry: {
