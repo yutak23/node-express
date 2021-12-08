@@ -14,7 +14,7 @@ app.get('/', async (req, res) => {
 
 	res.status(200).send({
 		msg: 'hello world!',
-		elaptime: Date.now() - reqTime,
+		elaptime: Date.now() - reqTime
 	});
 });
 

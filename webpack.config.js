@@ -8,12 +8,12 @@ module.exports = {
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 	name: 'node-express',
 	entry: {
-		index: './src/index.js',
+		index: './src/index.js'
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: '[name].js',
-		clean: true,
+		clean: true
 	},
 	module: {
 		rules: [
@@ -21,10 +21,10 @@ module.exports = {
 				test: /\.m?js$/,
 				exclude: /node_modules/,
 				use: {
-					loader: 'babel-loader',
-				},
-			},
-		],
+					loader: 'babel-loader'
+				}
+			}
+		]
 	},
-	plugins: [new ESLintPlugin({ exclude: 'node_modules' })],
+	plugins: [new ESLintPlugin({ exclude: 'node_modules' })]
 };
