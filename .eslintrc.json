@@ -1,15 +1,21 @@
 {
+    "root": true,
     "env": {
-        "es2021": true,
-        "node": true
+        "es2021": true
     },
     "extends": [
-        "airbnb-base"
+        "eslint:recommended",
+        "airbnb-base",
+        "plugin:prettier/recommended"
     ],
     "parserOptions": {
-        "ecmaVersion": 13,
-        "sourceType": "module"
+        "ecmaVersion": 12
     },
     "rules": {
-    }
+        "no-console": "off"
+    },
+    "ignorePatterns": [
+        "/node_modules/",
+        "/dist/"
+    ]
 }
