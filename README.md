@@ -62,3 +62,32 @@ module.exports = { presets };
 詳細は以下の Qiita を参照。
 
 - [Node.js(Express)の開発環境を整備する　 ESLint / Prettier / Visual Studio Code / ホットリロード](https://qiita.com/yuta-katayama-23/items/5d73bbe79c19301551df)
+
+## Step4 Jest を導入する
+
+詳細は以下の Qiita を参照。
+
+- [モダンな（ES6 以降の）Node.js で Jest を実行する　 ESLint の設定も](https://qiita.com/yuta-katayama-23/items/cd0a6ddff909b21b3b40)
+
+### Jest のための設定で補足
+
+仮にプロダクトコードの Babel の設定がある場合、以下のように`env`オプションで NODE_ENV=test の時の設定を作る事ができる。
+
+```js:babel.config.js
+module.exports = {
+    presets: [
+        [
+            '@babel/preset-env',
+            {
+                useBuiltIns: 'usage',
+                corejs: 3
+            }
+        ]
+    ],
+    env: {
+        test: {
+            presets: [['@babel/preset-env', { targets: { node: 'current' } }]]
+        }
+    }
+};
+```
