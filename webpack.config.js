@@ -3,6 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
+	devtool: 'source-map',
 	target: 'node',
 	externals: [nodeExternals()],
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',

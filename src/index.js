@@ -1,21 +1,17 @@
+import 'source-map-support/register';
 import express from 'express';
 
 const app = express();
+app.use(express.json());
 
-app.get('/', async (req, res) => {
-	const reqTime = Date.now();
-	console.log(Array.from('foo'));
-
-	await new Promise((resolve) => {
-		setTimeout(() => {
-			resolve('sleep');
-		}, 500);
-	});
-
-	res.status(200).send({
-		msg: 'hello world!',
-		elaptime: Date.now() - reqTime
-	});
+// eslint-disable-next-line no-unused-vars
+app.get('/', (req, res) => {
+	throw new Error('test');
 });
 
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+	console.log(err);
+	res.status(500).send();
+});
 app.listen(3000, () => console.log('listening on port 3000!'));
