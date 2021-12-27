@@ -1,0 +1,229 @@
+openapi: 3.0.0
+info:
+  title: ユーザー管理API
+  version: '1.0'
+  contact:
+    email: user-api@example.com
+  description: ユーザー情報を作成・更新・取得・削除するためのAPIです
+  license:
+    name: MIT
+tags:
+  - name: User API
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  '/api/v1/user/{userId}':
+    get:
+      summary: ユーザ情報取得API
+      operationId: get-users-userId
+      description: 一致したユーザーIDを持つユーザーの情報を取得します。
+      tags:
+        - User API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/user'
+                  - $ref: '#/components/schemas/email'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters: []
+    patch:
+      summary: ユーザ情報更新API
+      operationId: patch-users-userId
+      description: |-
+        既存のユーザーの情報を更新することができます。
+        ※ただしメールアドレスの更新はできません。
+      tags:
+        - User API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        description: ''
+      responses:
+        '200':
+          description: User Updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/user'
+                  - $ref: '#/components/schemas/email'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: ユーザ情報削除API
+      operationId: delete-users-userId
+      description: 一致したユーザーIDを持つユーザーの情報を削除します。
+      tags:
+        - User API
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+  /api/v1/user:
+    post:
+      summary: ユーザ情報作成API
+      operationId: post-user
+      description: 新しいユーザーを作成します。
+      tags:
+        - User API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/user'
+                - $ref: '#/components/schemas/email'
+        description: ''
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/user'
+                  - $ref: '#/components/schemas/email'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters: []
+    parameters: []
+components:
+  schemas:
+    user:
+      title: user
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          description: 指定されたユーザーの一意の識別子。
+          example: 142
+          minimum: 1
+          readOnly: true
+        first_name:
+          type: string
+          description: 姓
+          minLength: 1
+          maxLength: 32
+          example: 山田
+        last_name:
+          type: string
+          description: 名
+          example: 太郎
+          minLength: 1
+          maxLength: 32
+        date_of_birth:
+          type: string
+          format: date
+          example: '1997-10-31'
+          description: 誕生日
+        created_at:
+          type: integer
+          format: int64
+          description: ユーザーが作成された日付。
+          example: 1639444400
+          readOnly: true
+      required:
+        - id
+        - created_at
+    email:
+      title: email
+      type: object
+      description: ''
+      properties:
+        email:
+          type: string
+          format: email
+          example: sample@example.com
+          minLength: 6
+          maxLength: 96
+          description: メールアドレス
+      required:
+        - email
+    Error:
+      title: Error
+      type: object
+      description: ''
+      properties:
+        message:
+          type: string
+          example: data not found
+          minLength: 1
+          description: エラーメッセージ
+        status_code:
+          type: integer
+          example: 404
+          description: HTTPステータスコード
+      required:
+        - message
+        - status_code

@@ -6,7 +6,11 @@
 	"author": "yuta-katayama-23",
 	"license": "MIT",
 	"dependencies": {
+		"app-root-path": "^3.0.0",
+		"camelcase-keys": "^7.0.1",
 		"express": "^4.17.1",
+		"express-openapi-validator": "^4.13.4",
+		"snakecase-keys": "^5.1.2",
 		"source-map-support": "^0.5.21"
 	},
 	"devDependencies": {
