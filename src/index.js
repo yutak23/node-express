@@ -1,14 +1,25 @@
 import 'source-map-support/register';
 import express, { Router } from 'express';
 import openapiValidator from './middleware/custome-openapi-validator';
+import errorResponse from './middleware/error-response';
+import CustomError from './middleware/custom-error';
 
 const app = express();
 const router = Router();
 
 app.use(express.json());
+app.use(errorResponse());
 app.use(openapiValidator('/api/v1/user'));
 
 app.use('/api/v1', router);
+
+router.get('/', (req, res) => {
+	try {
+		throw new CustomError(409, 'Already exits');
+	} catch (error) {
+		res.error(error);
+	}
+});
 
 router.get('/user/:userid', (req, res) => {
 	res
@@ -22,9 +33,6 @@ router.post('/user', (req, res) => {
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-	res.status(err.status || 500).json({
-		message: err.message,
-		errors: err.errors
-	});
+	res.error(err);
 });
 app.listen(3000, () => console.log('listening on port 3000!'));
