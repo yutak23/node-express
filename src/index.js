@@ -15,6 +15,7 @@ app.use('/api/v1', router);
 
 router.get('/', (req, res) => {
 	try {
+		console.log('debug');
 		throw new CustomError(409, 'Already exits');
 	} catch (error) {
 		res.error(error);
