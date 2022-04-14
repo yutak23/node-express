@@ -10,7 +10,8 @@
 		"plugin:prettier/recommended"
 	],
 	"rules": {
-		"no-console": "off"
+		"no-console": "off",
+		"sort-imports": "error"
 	},
 	"ignorePatterns": ["/node_modules/", "/dist/"]
 }
