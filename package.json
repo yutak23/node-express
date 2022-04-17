@@ -21,10 +21,9 @@
 		"core-js": "^3.19.2",
 		"eslint": "^8.4.0",
 		"eslint-config-airbnb-base": "^15.0.0",
-		"eslint-config-prettier": "^8.3.0",
+		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.25.3",
 		"eslint-plugin-jest": "^25.3.0",
-		"eslint-plugin-prettier": "^4.0.0",
 		"eslint-webpack-plugin": "^3.1.1",
 		"jest": "^27.4.5",
 		"nodemon": "^2.0.15",
@@ -41,6 +40,8 @@
 		"build:debug": "webpack --node-env=development",
 		"start:watch": "nodemon dist/index.js",
 		"lint": "eslint src/*",
-		"test": "jest"
+		"test": "jest",
+		"mysqldump:schema": "docker exec -t mysql mysqldump -u root --databases user --no-data > ./sql/schema.sql",
+		"mysqldump:data": "docker exec -t mysql mysqldump -u root user -t users > ./sql/data.sql"
 	}
 }

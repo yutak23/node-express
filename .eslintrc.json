@@ -8,17 +8,10 @@
 		"plugin:import/recommended",
 		"airbnb-base",
 		"plugin:jest/recommended",
-		"plugin:prettier/recommended"
+		"prettier"
 	],
 	"rules": {
-		"no-console": "off",
-		"sort-imports": "off",
-		"import/order": [
-			"error",
-			{
-				"alphabetize": { "order": "asc" }
-			}
-		]
+		"no-console": "off"
 	},
 	"ignorePatterns": ["/node_modules/", "/dist/"]
 }
