@@ -45,6 +45,7 @@
 		"test": "jest",
 		"mysqldump:schema": "docker exec -t mysql mysqldump -u root --databases user --no-data > ./sql/schema.sql",
 		"mysqldump:data": "docker exec -t mysql mysqldump -u root user -t users > ./sql/data.sql",
+		"create:table": "aws dynamodb create-table --cli-input-json file://./commands/create-table.json --endpoint-url http://localhost:8000",
 		"prepare": "npx simple-git-hooks"
 	},
 	"lint-staged": {
