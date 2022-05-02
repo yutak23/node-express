@@ -9,4 +9,3 @@ services:
     volumes:
       - './data/dynamodb:/home/dynamodblocal/data'
     working_dir: /home/dynamodblocal
-    user: root
