@@ -1,8 +1,8 @@
 import 'source-map-support/register';
 import express, { Router } from 'express';
-import openapiValidator from './middleware/custome-openapi-validator';
-import errorResponse from './middleware/error-response';
-import CustomError from './middleware/custom-error';
+import openapiValidator from './lib/custome-openapi-validator';
+import errorResponse from './lib/error-response';
+import CustomError from './lib/custom-error';
 
 const app = express();
 const router = Router();
