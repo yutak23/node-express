@@ -3,8 +3,8 @@
 		"region": "local-env",
 		"endpoint": "http://localhost:8000",
 		"credentials": {
-			"AccessKeyId": "dumy",
-			"SecretAccessKey": "dumy"
+			"accessKeyId": "dumy",
+			"secretAccessKey": "dumy"
 		}
 	}
 }
