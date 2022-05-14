@@ -21,7 +21,7 @@ jobs:
         with:
           aws-access-key-id: dumy
           aws-secret-access-key: dumy
-          aws-region: local-env
+          aws-region: ap-northeast-1
 
       - name: yarn install
         run: yarn install
