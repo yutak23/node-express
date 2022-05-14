@@ -10,16 +10,26 @@ jobs:
   test-on-ci:
     # 指定可能なもの一覧 https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners
     # イメージ詳細 https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+    # イメージにNode.js, yarn, docker, docker-compose, aws cliはあらかじめインストールされている
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
+      - name: configure aWS credentials for aws cli
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: dumy
+          aws-secret-access-key: dumy
+          aws-region: local-env
+
       - name: yarn install
         run: yarn install
 
-      - name: Dyanamodb execute
-        run: docker-compose up -d
+      - name: dyanamodb execute and create table
+        run: |
+          docker-compose up -d
+          aws dynamodb create-table --cli-input-json file://./commands/create-table-user.json --endpoint-url http://localhost:8000
 
       - name: run test
         run: yarn test
