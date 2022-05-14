@@ -14,8 +14,7 @@
 		"prettier"
 	],
 	"rules": {
-		"no-console": "off",
-		"jest/expect-expect": "off"
+		"no-console": "off"
 	},
 	"ignorePatterns": ["/node_modules/", "/dist/"]
 }
