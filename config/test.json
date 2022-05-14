@@ -1,6 +1,10 @@
 {
 	"dynamodb": {
 		"region": "local-env",
-		"endpoint": "http://localhost:8000"
+		"endpoint": "http://localhost:8000",
+		"credentials": {
+			"AccessKeyId": "dumy",
+			"SecretAccessKey": "dumy"
+		}
 	}
 }
