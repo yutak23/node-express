@@ -22,6 +22,8 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.17.10",
+		"@babel/eslint-parser": "^7.17.0",
+		"@babel/plugin-proposal-throw-expressions": "^7.16.7",
 		"@babel/preset-env": "^7.17.10",
 		"babel-loader": "^8.2.5",
 		"core-js": "^3.22.5",
@@ -47,7 +49,7 @@
 		"build:prod": "webpack --node-env=production",
 		"build:debug": "webpack --node-env=development",
 		"start:watch": "nodemon dist/index.js",
-		"lint": "eslint src/*",
+		"lint": "eslint src/",
 		"test": "jest",
 		"mysqldump:schema": "docker exec -t mysql mysqldump -u root --databases user --no-data > ./sql/schema.sql",
 		"mysqldump:data": "docker exec -t mysql mysqldump -u root user -t users > ./sql/data.sql",

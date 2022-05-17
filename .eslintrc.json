@@ -1,11 +1,8 @@
 {
 	"root": true,
-	"env": {
-		"es2022": true
-	},
-	"parserOptions": {
-		"ecmaVersion": 13
-	},
+	"env": { "es2022": true },
+	"parserOptions": { "ecmaVersion": 13 },
+	"parser": "@babel/eslint-parser",
 	"extends": [
 		"eslint:recommended",
 		"plugin:import/recommended",
@@ -13,8 +10,6 @@
 		"plugin:jest/recommended",
 		"prettier"
 	],
-	"rules": {
-		"no-console": "off"
-	},
-	"ignorePatterns": ["/node_modules/", "/dist/"]
+	"rules": { "no-console": "off" },
+	"ignorePatterns": ["/node_modules/", "/dist/", "/openapi/"]
 }

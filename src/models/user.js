@@ -28,8 +28,8 @@ const otherAttributes = {
 export default class User extends BaseModel {
 	tableName = 'user';
 
-	constructor(sequelize) {
-		super(sequelize, tableDefinition, otherAttributes);
+	constructor(customDynamodbClient) {
+		super(customDynamodbClient, tableDefinition, otherAttributes);
 	}
 
 	// 同期的な処理でのエラー検証用のメソッド
@@ -46,5 +46,10 @@ export default class User extends BaseModel {
 		if (options.exclude && Array.isArray(options.exclude))
 			options.exclude.forEach((key) => delete json[key]);
 		return json;
+	}
+
+	newSyntax(value = throw new TypeError('Argument required')) {
+		console.log(value);
+		console.log(this);
 	}
 }

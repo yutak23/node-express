@@ -8,5 +8,6 @@ module.exports = {
 				targets: { node: 'current' }
 			}
 		]
-	]
+	],
+	plugins: ['@babel/plugin-proposal-throw-expressions']
 };
