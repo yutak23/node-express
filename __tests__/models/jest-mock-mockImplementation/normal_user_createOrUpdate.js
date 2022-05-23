@@ -17,7 +17,8 @@ describe('User Model Test : createOrUpdate', () => {
 			putItem: () => data
 		}));
 
-		models.user = new User();
+		const mockCustomDynamodbClient = new CustomDynamodbClient();
+		models.user = new User(mockCustomDynamodbClient);
 	});
 
 	describe('Test Block', () => {

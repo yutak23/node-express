@@ -31,9 +31,10 @@ describe('User Model Test : createOrUpdate', () => {
 	const models = {};
 
 	beforeAll(() => {
-		CustomDynamodbClient.mockClear(); // mock関数ではないのでエラーになるためコメントアウト
+		// CustomDynamodbClient.mockClear(); // mock関数ではないのでエラーになるためコメントアウト
 
-		models.user = new User();
+		const mockCustomDynamodbClient = new CustomDynamodbClient();
+		models.user = new User(mockCustomDynamodbClient);
 	});
 
 	describe('Test Block', () => {

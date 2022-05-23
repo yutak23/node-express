@@ -1,7 +1,4 @@
 import User from '../../../src/models/user';
-import CustomDynamodbClient from '../../../src/lib/custom-dynamoidb-client';
-
-jest.mock('../../../src/lib/custom-dynamoidb-client');
 
 describe('User Model Test : createOrUpdate', () => {
 	const models = {};
@@ -12,7 +9,10 @@ describe('User Model Test : createOrUpdate', () => {
 	};
 
 	beforeAll(() => {
-		const mockCustomDynamodbClient = new CustomDynamodbClient();
+		const mockCustomDynamodbClient = jest.createMockFromModule(
+			'../../../src/lib/custom-dynamoidb-client'
+		);
+		mockCustomDynamodbClient.putItem = jest.fn(() => data);
 		models.user = new User(mockCustomDynamodbClient);
 	});
 
