@@ -1,14 +1,14 @@
-import config from 'config';
 import User from '../../../src/models/user';
 import CustomDynamodbClient from '../../../src/lib/custom-dynamoidb-client';
 
+jest.mock('../../../src/lib/custom-dynamoidb-client');
+
 describe('User Model Test : validateSync', () => {
-	const client = {};
 	const models = {};
 
 	beforeAll(() => {
-		client.dynamodb = new CustomDynamodbClient(config.get('dynamodb'));
-		models.user = new User(client.dynamodb);
+		const mockCustomDynamodbClient = new CustomDynamodbClient();
+		models.user = new User(mockCustomDynamodbClient);
 	});
 
 	describe('Test Block', () => {
@@ -71,9 +71,5 @@ describe('User Model Test : validateSync', () => {
 			expect(exec).toThrow();
 			expect(exec).toThrowError(/^must be integer$/);
 		});
-	});
-
-	afterAll(() => {
-		client.dynamodb.destroy();
 	});
 });

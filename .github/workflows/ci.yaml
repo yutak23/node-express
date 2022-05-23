@@ -24,10 +24,5 @@ jobs:
       - name: yarn install
         run: yarn install
 
-      - name: dyanamodb execute and create table
-        run: |
-          docker-compose up -d
-          aws dynamodb create-table --cli-input-json file://./commands/create-table-user.json --endpoint-url http://localhost:8000
-
       - name: run test
         run: yarn test

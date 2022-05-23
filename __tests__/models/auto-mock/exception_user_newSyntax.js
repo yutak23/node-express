@@ -1,14 +1,14 @@
-import config from 'config';
 import User from '../../../src/models/user';
 import CustomDynamodbClient from '../../../src/lib/custom-dynamoidb-client';
 
+jest.mock('../../../src/lib/custom-dynamoidb-client');
+
 describe('User Model Test : newSyntax', () => {
-	const client = {};
 	const models = {};
 
 	beforeAll(() => {
-		client.dynamodb = new CustomDynamodbClient(config.get('dynamodb'));
-		models.user = new User(client.dynamodb);
+		const mockCustomDynamodbClient = new CustomDynamodbClient();
+		models.user = new User(mockCustomDynamodbClient);
 	});
 
 	test('Argument required', () => {
@@ -17,9 +17,5 @@ describe('User Model Test : newSyntax', () => {
 		};
 		expect(exec).toThrow();
 		expect(exec).toThrowError(/^Argument required$/);
-	});
-
-	afterAll(() => {
-		client.dynamodb.destroy();
 	});
 });
