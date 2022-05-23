@@ -1,13 +1,14 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import { merge, mergeWith, isArray, cloneDeep } from 'lodash';
+import CustomDynamodbClient from '../lib/custom-dynamoidb-client';
 
 const ajv = new Ajv();
 addFormats(ajv);
 
 export default class BaseModel {
-	constructor(customDynamodbClient, tableDefinition, otherAttributes) {
-		this.customDynamodbClient = customDynamodbClient;
+	constructor(tableDefinition, otherAttributes, config = {}) {
+		this.customDynamodbClient = new CustomDynamodbClient(config);
 
 		const schema = mergeWith(
 			cloneDeep(tableDefinition),

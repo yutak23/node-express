@@ -28,8 +28,8 @@ const otherAttributes = {
 export default class User extends BaseModel {
 	tableName = 'user';
 
-	constructor(customDynamodbClient) {
-		super(customDynamodbClient, tableDefinition, otherAttributes);
+	constructor(config = {}) {
+		super(tableDefinition, otherAttributes, config);
 	}
 
 	// 同期的な処理でのエラー検証用のメソッド

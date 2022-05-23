@@ -1,4 +1,5 @@
 import User from '../../../src/models/user';
+// eslint-disable-next-line no-unused-vars
 import CustomDynamodbClient from '../../../src/lib/custom-dynamoidb-client';
 
 jest.mock('../../../src/lib/custom-dynamoidb-client');
@@ -12,8 +13,7 @@ describe('User Model Test : createOrUpdate', () => {
 	};
 
 	beforeAll(() => {
-		const mockCustomDynamodbClient = new CustomDynamodbClient();
-		models.user = new User(mockCustomDynamodbClient);
+		models.user = new User();
 	});
 
 	describe('Test Block', () => {
