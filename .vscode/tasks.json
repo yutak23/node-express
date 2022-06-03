@@ -4,7 +4,7 @@
 		{
 			"label": "build for debug",
 			"type": "npm",
-			"script": "build:debug"
+			"script": "debug"
 		}
 	]
 }

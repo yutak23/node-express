@@ -5,6 +5,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 module.exports = {
 	devtool: 'source-map',
 	target: 'node',
+	externalsPresets: { node: true },
 	externals: [nodeExternals()],
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 	name: 'node-express',
