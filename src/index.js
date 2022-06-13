@@ -1,5 +1,7 @@
 import 'source-map-support/register';
 import express, { Router } from 'express';
+import appRoot from 'app-root-path';
+import compression from 'compression';
 import openapiValidator from './lib/custome-openapi-validator';
 import errorResponse from './lib/error-response';
 import CustomError from './lib/custom-error';
@@ -7,11 +9,16 @@ import CustomError from './lib/custom-error';
 const app = express();
 const router = Router();
 
+app.use(compression({ level: 1, memLevel: 3 }));
+app.use(express.static('static'));
 app.use(express.json());
 app.use(errorResponse());
 app.use(openapiValidator('/api/v1/user'));
-
 app.use('/api/v1', router);
+
+app.get('*', (req, res) => {
+	res.sendFile(appRoot.resolve('static/index.html'));
+});
 
 router.get('/', (req, res) => {
 	try {

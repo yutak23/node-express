@@ -11,5 +11,5 @@
 		"prettier"
 	],
 	"rules": { "no-console": "off" },
-	"ignorePatterns": ["/node_modules/", "/dist/", "/openapi/"]
+	"ignorePatterns": ["/node_modules/", "/dist/", "/openapi/", "/static/"]
 }

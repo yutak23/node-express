@@ -136,3 +136,6 @@ dist
 
 # Docker
 data
+
+# frontend
+static
