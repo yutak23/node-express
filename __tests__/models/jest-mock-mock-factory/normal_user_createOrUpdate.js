@@ -1,4 +1,4 @@
-import User from '../../../src/models/user';
+import User from '../../../src/models/dynamodb/user';
 import CustomDynamodbClient from '../../../src/lib/custom-dynamoidb-client';
 
 const data = {

@@ -1,4 +1,4 @@
-import User from '../../../src/models/user';
+import User from '../../../src/models/dynamodb/user';
 
 describe('User Model Test : createOrUpdate', () => {
 	const models = {};
