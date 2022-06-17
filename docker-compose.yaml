@@ -1,12 +1,26 @@
 version: '3.9'
 services:
-  dynamodb-local:
-    command: -jar DynamoDBLocal.jar -sharedDb -dbPath ./data
-    image: 'amazon/dynamodb-local:latest'
-    container_name: dynamodb-local
+  mysql:
+    image: mysql:5.7.38
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      TZ: 'Asia/Tokyo'
     ports:
-      - '8000:8000'
+      - 3306:3306
     volumes:
-      - './data/dynamodb:/home/dynamodblocal/data'
-    working_dir: /home/dynamodblocal
-    user: root
+      - ./data/mysql:/var/lib/mysql
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  # アプリケーション側では使っていない（結合テストを試してみたかった時に使っていた）
+  # dynamodb-local:
+  #   command: -jar DynamoDBLocal.jar -sharedDb -dbPath ./data
+  #   image: 'amazon/dynamodb-local:latest'
+  #   container_name: dynamodb-local
+  #   ports:
+  #     - '8000:8000'
+  #   volumes:
+  #     - './data/dynamodb:/home/dynamodblocal/data'
+  #   working_dir: /home/dynamodblocal
+  #   user: root

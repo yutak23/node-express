@@ -92,9 +92,9 @@ module.exports = {
 };
 ```
 
-# メモ
+## sequelize
 
-まずは今の実装の状態（インスタンスを引数で渡す）で mock を使ったテスト書いてみる
-その後、インスタンスをクラス内で生成するパターンでテストを書いてみる
-
-その際、ソースは共存させるのではなく、書き換えてしまう
+- コンストラクタのオプションについては[public constructor(database: string, username: string, password: string, options: object)](https://sequelize.org/api/v6/class/src/sequelize.js~sequelize#instance-constructor-constructor)
+- コンストラクタの options.timezone でタイムゾーンを設定しないとうまくいかない（https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#mysql には、[MySQL docs](https://www.npmjs.com/package/mysql#connection-options)に書かれている設定ができると書いてあり、そこに`timezone`はあるが、こちらではうまくいかなかった）
+- モデルの作成方法については https://sequelize.org/docs/v6/core-concepts/model-basics/#extending-model
+- モデルの中身の設定方法は https://sequelize.org/api/v6/class/src/model.js~model#static-method-init

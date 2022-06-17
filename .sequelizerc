@@ -1,0 +1,8 @@
+require('@babel/register');
+
+module.exports = {
+	config: 'mysql/database.json',
+	'models-path': 'src/models/sequelize',
+	'seeders-path': 'mysql/seeders',
+	'migrations-path': 'mysql/migrations'
+};
