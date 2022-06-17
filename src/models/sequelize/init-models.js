@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import _user from './user';
+import Users from './users';
 
 export default (sequelize) => {
-	const user = _user(sequelize, DataTypes);
+	const user = Users.init(sequelize, DataTypes);
 	return { user };
 };
