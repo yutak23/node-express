@@ -6,6 +6,7 @@
 	"author": "yuta-katayama-23",
 	"license": "MIT",
 	"dependencies": {
+		"config": "^3.3.7",
 		"ioredis": "^5.0.6"
 	},
 	"devDependencies": {
