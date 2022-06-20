@@ -48,7 +48,7 @@ router.get('/user/:id', async (req, res) => {
 		const user = await models.user.findByPk(req.params.id);
 
 		if (!user) throw new CustomError(404, 'Not Found');
-		res.status(200).json(user.toJSON({ exclude: ['created_at'] }));
+		res.status(200).json(user.toJSON({ exclude: ['password'] }));
 	} catch (error) {
 		res.status(500).error(error);
 	}

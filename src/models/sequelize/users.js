@@ -1,9 +1,8 @@
 import { Sequelize, Model } from 'sequelize';
 import { DateTime } from 'luxon';
-import sha256 from 'crypto-js/sha256';
-import config from 'config';
+import bcrypt from 'bcrypt';
 
-const encrypt = (v) => sha256(`${v}:${config.get('salt.password')}`).toString();
+const encrypt = (v) => bcrypt.hashSync(v, 10);
 
 export default class Users extends Model {
 	static init(sequelize, DataTypes) {
@@ -22,7 +21,7 @@ export default class Users extends Model {
 					validate: { isEmail: true }
 				},
 				password: {
-					type: DataTypes.CHAR(64),
+					type: DataTypes.CHAR(60),
 					allowNull: false,
 					set(v) {
 						this.setDataValue('password', encrypt(v));

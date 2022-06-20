@@ -13,6 +13,5 @@
 		"pool": {
 			"min": 1
 		}
-	},
-	"salt": { "password": "node-express" }
+	}
 }
