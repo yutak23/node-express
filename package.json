@@ -1,0 +1,35 @@
+{
+	"name": "node-express",
+	"description": "Unit test",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "yuta-katayama-23",
+	"license": "MIT",
+	"dependencies": {
+		"ioredis": "^5.0.6"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.18.5",
+		"@babel/preset-env": "^7.18.2",
+		"eslint": "^8.18.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jest": "^26.5.3",
+		"jest": "^28.1.1",
+		"lint-staged": "^13.0.2",
+		"prettier": "^2.7.1",
+		"simple-git-hooks": "^2.8.0"
+	},
+	"scripts": {
+		"lint": "eslint src/",
+		"test": "jest",
+		"prepare": "npx simple-git-hooks"
+	},
+	"lint-staged": {
+		"*": "npx prettier --ignore-unknown --write"
+	},
+	"simple-git-hooks": {
+		"pre-commit": "npx lint-staged --verbose"
+	}
+}
