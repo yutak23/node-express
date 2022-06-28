@@ -13,5 +13,11 @@
 		"pool": {
 			"min": 1
 		}
+	},
+	"crypto": {
+		"password": "passw0rd",
+		"salt": "salt",
+		"seed": "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-",
+		"separetors": "0"
 	}
 }

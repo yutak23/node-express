@@ -35,20 +35,41 @@ router.post('/user', async (req, res) => {
 		const { id } = await models.user.create({ email, password });
 		const user = await models.user.findByPk(id);
 
-		res.status(201).json(user.toJSON());
+		res.status(201).json(user.toJSON({ exclude: ['password'] }));
 	} catch (error) {
 		res.status(500).error(error);
 	}
 });
 
-router.get('/user/:id', async (req, res) => {
+router.get('/users', async (req, res) => {
+	const { models } = req.app.locals;
+	const { offset, limit } = req.query;
+
+	try {
+		const result = await models.user.findAndCountAll({
+			offset: offset || 0,
+			limit: limit || 10
+		});
+
+		res.status(200).json({
+			total: result.count,
+			users: result.rows.map((user) => user.toJSON({ exclude: ['password'] }))
+		});
+	} catch (error) {
+		res.status(500).error(error);
+	}
+});
+
+router.get('/user/:userId', async (req, res) => {
 	const { models } = req.app.locals;
 
 	try {
-		const user = await models.user.findByPk(req.params.id);
-
+		const user = await models.user.findByUserId(req.params.userId, {
+			attributes: { exclude: [`password`] }
+		});
 		if (!user) throw new CustomError(404, 'Not Found');
-		res.status(200).json(user.toJSON({ exclude: ['password'] }));
+
+		res.status(200).json(user.toJSON());
 	} catch (error) {
 		res.status(500).error(error);
 	}

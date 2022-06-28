@@ -1,8 +1,10 @@
 import { Sequelize, Model } from 'sequelize';
 import { DateTime } from 'luxon';
 import bcrypt from 'bcrypt';
+import NumberCryptoDecrypto from '../../lib/number-crypto-decrypto';
 
 const encrypt = (v) => bcrypt.hashSync(v, 10);
+const numberCryptoDecrypto = new NumberCryptoDecrypto();
 
 export default class Users extends Model {
 	static init(sequelize, DataTypes) {
@@ -46,6 +48,15 @@ export default class Users extends Model {
 							this.getDataValue('updated_at')
 						).toUnixInteger();
 					}
+				},
+				userId: {
+					type: DataTypes.VIRTUAL,
+					get() {
+						return numberCryptoDecrypto.encrypting(this.getDataValue('id'));
+					},
+					set(v) {
+						this.setDataValue('id', numberCryptoDecrypto.decrypting(v));
+					}
 				}
 			},
 			{
@@ -69,6 +80,15 @@ export default class Users extends Model {
 				]
 			}
 		);
+	}
+
+	static findByUserId(userId, options = {}) {
+		if (!userId) throw new Error('userId must be required');
+
+		const id = numberCryptoDecrypto.decrypting(userId);
+		if (!id) return null;
+
+		return this.findByPk(id, options);
 	}
 
 	toJSON(options = {}) {
