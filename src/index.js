@@ -60,7 +60,22 @@ router.get('/users', async (req, res) => {
 	}
 });
 
-router.get('/user/:userId', async (req, res) => {
+router.get('/user/:id', async (req, res) => {
+	const { models } = req.app.locals;
+
+	try {
+		const user = await models.user.findByPk(req.params.id, {
+			attributes: { exclude: [`password`] }
+		});
+		if (!user) throw new CustomError(404, 'Not Found');
+
+		res.status(200).json(user.toJSON());
+	} catch (error) {
+		res.status(500).error(error);
+	}
+});
+
+router.get('/user/id/:userId', async (req, res) => {
 	const { models } = req.app.locals;
 
 	try {
@@ -82,12 +97,6 @@ router.get('/', (req, res) => {
 	} catch (error) {
 		res.error(error);
 	}
-});
-
-router.get('/user/:userid', (req, res) => {
-	res
-		.status(200)
-		.json({ id: 1, email: 'sample@example.com', createdAt: 111111 });
 });
 
 // eslint-disable-next-line no-unused-vars
