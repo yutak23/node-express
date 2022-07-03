@@ -12,7 +12,7 @@ tags:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  '/api/v1/user/{userId}':
+  '/api/v1/user/{user_id}':
     get:
       summary: ユーザ情報取得API
       operationId: get-users-userId
@@ -27,7 +27,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/user'
-                  - $ref: '#/components/schemas/email'
         '400':
           description: Bad Request
           content:
@@ -59,7 +58,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user'
+              $ref: '#/components/schemas/update_user'
         description: ''
       responses:
         '200':
@@ -67,9 +66,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/user'
-                  - $ref: '#/components/schemas/email'
+                $ref: '#/components/schemas/update_user'
         '400':
           description: Bad Request
           content:
@@ -118,9 +115,63 @@ paths:
     parameters:
       - schema:
           type: integer
-        name: userId
+          format: int32
+          minimum: 1
+        name: user_id
         in: path
         required: true
+        description: ユーザーID
+  /api/v1/users:
+    get:
+      summary: Your GET endpoint
+      operationId: get-api-v1-users
+      description: 全てのユーザー情報を取得します。
+      tags:
+        - User API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: 総ユーザー数
+                    minimum: 0
+                    format: int32
+                    example: 3
+                  users:
+                    type: array
+                    minItems: 0
+                    description: ユーザー情報の配列
+                    items:
+                      $ref: '#/components/schemas/user'
+                required:
+                  - total
+                  - users
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+        - schema:
+            type: integer
+            minimum: 0
+          in: query
+          name: offset
+          description: 取得開始位置
+        - schema:
+            type: integer
+            minimum: 0
+            default: 10
+            example: 10
+          in: query
+          name: limit
+          description: 取得上限数
   /api/v1/user:
     post:
       summary: ユーザ情報作成API
@@ -132,9 +183,7 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/user'
-                - $ref: '#/components/schemas/email'
+              $ref: '#/components/schemas/user'
         description: ''
       responses:
         '200':
@@ -142,13 +191,19 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/user'
-                  - $ref: '#/components/schemas/email'
+                $ref: '#/components/schemas/user'
         '400':
           description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '409':
           description: Email Already Taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '500':
           description: Internal Server Error
           content:
@@ -159,7 +214,7 @@ paths:
     parameters: []
 components:
   schemas:
-    user:
+    base_user:
       title: user
       type: object
       description: ''
@@ -167,49 +222,61 @@ components:
         id:
           type: integer
           description: 指定されたユーザーの一意の識別子。
-          example: 142
+          example: 1
           minimum: 1
           readOnly: true
-        first_name:
-          type: string
-          description: 姓
-          minLength: 1
-          maxLength: 32
-          example: 山田
-        last_name:
-          type: string
-          description: 名
-          example: 太郎
-          minLength: 1
-          maxLength: 32
-        date_of_birth:
-          type: string
-          format: date
-          example: '1997-10-31'
-          description: 誕生日
-        created_at:
-          type: integer
-          format: int64
-          description: ユーザーが作成された日付。
-          example: 1639444400
-          readOnly: true
-      required:
-        - id
-        - created_at
-    email:
-      title: email
-      type: object
-      description: ''
-      properties:
         email:
           type: string
           format: email
           example: sample@example.com
-          minLength: 6
-          maxLength: 96
           description: メールアドレス
+        full_name:
+          type: string
+          minLength: 1
+          maxLength: 32
+          example: 山田 太郎
+          description: 名前
+          nullable: true
+        created_at:
+          type: integer
+          format: int64
+          description: 作成日時（UNIX TIME：秒）
+          example: 1639444400
+          minimum: 1600000000
+          readOnly: true
+        updated_at:
+          type: integer
+          description: 更新日時（UNIX TIME：秒）
+          example: 1639444400
+          minimum: 1600000000
+          readOnly: true
+    user:
+      title: user
+      additionalProperties: false
+      properties:
+        id: {}
+        email: {}
+        full_name: {}
+        created_at: {}
+        updated_at: {}
+      allOf:
+        - $ref: '#/components/schemas/base_user'
+        - type: object
       required:
+        - id
         - email
+        - full_name
+        - created_at
+        - updated_at
+    update_user:
+      title: update_user
+      additionalProperties: false
+      properties:
+        email: {}
+        full_name: {}
+      allOf:
+        - $ref: '#/components/schemas/base_user'
+        - type: object
     Error:
       title: Error
       type: object
@@ -224,6 +291,13 @@ components:
           type: integer
           example: 404
           description: HTTPステータスコード
+          minimum: 300
+          maximum: 530
+        path:
+          type: string
+          example: 'GET:/api/v1/not_found'
+          description: エラー発生APIパス
       required:
         - message
         - status_code
+        - path

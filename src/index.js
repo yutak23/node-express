@@ -4,7 +4,7 @@ import appRoot from 'app-root-path';
 import compression from 'compression';
 import Sequelize from 'sequelize';
 import config from 'config';
-// import openapiValidator from './lib/custome-openapi-validator';
+import openapiValidator from './lib/custome-openapi-validator';
 import errorResponse from './lib/error-response';
 import CustomError from './lib/custom-error';
 
@@ -15,9 +15,10 @@ const router = Router();
 
 app.use(compression({ level: 1, memLevel: 3 }));
 app.use(express.static('static'));
+
 app.use(express.json());
 app.use(errorResponse());
-// app.use(openapiValidator('/api/v1/user'));
+app.use(openapiValidator('/api/v1/user'));
 
 app.locals.models = initModels(new Sequelize(config.get('sequelize')));
 
@@ -35,7 +36,7 @@ router.post('/user', async (req, res) => {
 		const { id } = await models.user.create({ email, password });
 		const user = await models.user.findByPk(id);
 
-		res.status(201).json(user.toJSON({ exclude: ['password'] }));
+		res.status(201).json(user.toJSON({ exclude: [`userId`, `password`] }));
 	} catch (error) {
 		res.status(500).error(error);
 	}
@@ -53,7 +54,9 @@ router.get('/users', async (req, res) => {
 
 		res.status(200).json({
 			total: result.count,
-			users: result.rows.map((user) => user.toJSON({ exclude: ['password'] }))
+			users: result.rows.map((user) =>
+				user.toJSON({ exclude: [`userId`, `password`] })
+			)
 		});
 	} catch (error) {
 		res.status(500).error(error);
@@ -69,7 +72,28 @@ router.get('/user/:id', async (req, res) => {
 		});
 		if (!user) throw new CustomError(404, 'Not Found');
 
-		res.status(200).json(user.toJSON());
+		res.status(200).json(user.toJSON({ exclude: [`userId`] }));
+	} catch (error) {
+		res.status(500).error(error);
+	}
+});
+
+router.patch('/user/:id', async (req, res) => {
+	const { models } = req.app.locals;
+	const data = req.body;
+
+	try {
+		const user = await models.user.findByPk(req.params.id, {
+			attributes: { exclude: [`password`] }
+		});
+		if (!user) throw new CustomError(404, 'Not Found');
+
+		Object.keys(data).forEach((key) => {
+			user[key] = data[key];
+		});
+		await user.save();
+
+		res.status(200).json(user.toJSON({ exclude: [`userId`] }));
 	} catch (error) {
 		res.status(500).error(error);
 	}

@@ -68,6 +68,8 @@
 		"mysqldump:schema": "docker exec -t mysql mysqldump -u root --databases node-express --no-data | sed -e 's/ AUTO_INCREMENT=[0-9]*//' > ./mysql/sql/1_schema.sql",
 		"mysqldump:data": "docker exec -t mysql mysqldump -u root -t --databases node-express --no-create-db > ./mysql/sql/2_data.sql",
 		"create:table": "aws dynamodb create-table --cli-input-json file://./commands/create-table.json --endpoint-url http://localhost:8000",
+		"db:migrate": "npx sequelize-cli db:migrate",
+		"migration:generate": "npx sequelize-cli migration:generate",
 		"prepare": "npx simple-git-hooks"
 	},
 	"lint-staged": {

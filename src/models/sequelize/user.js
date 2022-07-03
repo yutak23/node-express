@@ -6,7 +6,7 @@ import NumberCryptoDecrypto from '../../lib/number-crypto-decrypto';
 const encrypt = (v) => bcrypt.hashSync(v, 10);
 const numberCryptoDecrypto = new NumberCryptoDecrypto();
 
-export default class Users extends Model {
+export default class User extends Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
@@ -29,25 +29,32 @@ export default class Users extends Model {
 						this.setDataValue('password', encrypt(v));
 					}
 				},
-				created_at: {
+				fullName: {
+					type: DataTypes.STRING(128),
+					allowNull: true,
+					field: 'full_name'
+				},
+				createdAt: {
 					allowNull: false,
 					type: DataTypes.DATE,
 					defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
 					get() {
 						return DateTime.fromJSDate(
-							this.getDataValue('created_at')
+							this.getDataValue('createdAt')
 						).toUnixInteger();
-					}
+					},
+					field: 'created_at'
 				},
-				updated_at: {
+				updatedAt: {
 					allowNull: false,
 					type: 'TIMESTAMP',
 					defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
 					get() {
 						return DateTime.fromJSDate(
-							this.getDataValue('updated_at')
+							this.getDataValue('updatedAt')
 						).toUnixInteger();
-					}
+					},
+					field: 'updated_at'
 				},
 				userId: {
 					type: DataTypes.VIRTUAL,
@@ -62,7 +69,7 @@ export default class Users extends Model {
 			{
 				sequelize,
 				tableName: 'users',
-				modelName: 'users',
+				modelName: 'user',
 				timestamps: false,
 				indexes: [
 					{
