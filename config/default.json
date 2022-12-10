@@ -19,5 +19,10 @@
 		"salt": "salt",
 		"seed": "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-",
 		"separetors": "0"
+	},
+	"numberConvertor": {
+		"destinationAlphabet": "jrY1mUEbz6sC3t4f7d29WRMTquAcOB8aivhXGQyLIZV0KkxJnPpoHFle",
+		"separetors": "gwDNS",
+		"salt": "salt"
 	}
 }

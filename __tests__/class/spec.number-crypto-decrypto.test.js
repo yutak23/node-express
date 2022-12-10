@@ -40,7 +40,7 @@ describe('NumberCryptoDecrypto class test', () => {
 					seed: '123456789',
 					separetors: '2'
 				});
-			}).toThrowError(`separetors string is not include in seed.`);
+			}).toThrow(`separetors string is not include in seed.`);
 		});
 
 		test('seed contains separators string with multiple', async () => {
@@ -50,7 +50,7 @@ describe('NumberCryptoDecrypto class test', () => {
 					seed: '123456789',
 					separetors: '25'
 				});
-			}).toThrowError(`separetors string is not include in seed.`);
+			}).toThrow(`separetors string is not include in seed.`);
 		});
 	});
 
