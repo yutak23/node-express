@@ -2,6 +2,7 @@ import anyBase from 'any-base';
 import config from 'config';
 import crypto from 'crypto';
 import { strict as assert } from 'assert';
+import { uniq } from 'lodash';
 
 const sha256hash = (buffer, salt) =>
 	crypto.createHash('sha256').update(`${salt}:${buffer}`).digest('hex');
@@ -16,6 +17,12 @@ export default class NumberConvertor {
 		this.separetors = (
 			options.separetors || config.get('numberConvertor.separetors')
 		).split('');
+
+		if (
+			uniq(this.destinationAlphabet.split('')).length !==
+			this.destinationAlphabet.length
+		)
+			throw new Error(`destinationAlphabet must not be duplicate`);
 
 		this.encode = anyBase(anyBase.DEC, this.destinationAlphabet);
 		this.decode = anyBase(this.destinationAlphabet, anyBase.DEC);
