@@ -4,11 +4,14 @@ import appRoot from 'app-root-path';
 import compression from 'compression';
 import Sequelize from 'sequelize';
 import config from 'config';
+import chalk from 'chalk';
 import openapiValidator from './lib/custome-openapi-validator';
 import errorResponse from './lib/error-response';
 import CustomError from './lib/custom-error';
 
 import initModels from './models/sequelize/init-models';
+
+import consoleExpressRouting from './lib/console-express-routing';
 
 const app = express();
 const router = Router();
@@ -127,4 +130,12 @@ router.get('/', (req, res) => {
 app.use((err, req, res, next) => {
 	res.error(err);
 });
-app.listen(3000, () => console.log('listening on port 3000!'));
+app.listen(3000, () => {
+	console.log();
+	console.log('  ♻️  Server running at:');
+	console.log(`    - Local:   ${chalk.cyan('http://localhost:3000')}`);
+	console.log();
+
+	// routing一覧を出力
+	consoleExpressRouting({ app });
+});

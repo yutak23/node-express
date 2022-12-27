@@ -1,1 +1,1 @@
-{ "reject": ["camelcase-keys", "nanoid"] }
+{ "reject": ["camelcase-keys", "nanoid", "chalk"] }
