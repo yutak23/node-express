@@ -46,7 +46,11 @@ const createApiRoutesTable = (routingList) => {
 	});
 
 	Object.keys(routingList).forEach((key) =>
-		table.push([`    - ${key}:`, prepareMethods(routingList[key])])
+		table.push([
+			// 最後の"/"を削除
+			`    - ${key.replace(/\/$/, '')}:`,
+			prepareMethods(routingList[key])
+		])
 	);
 
 	return table;

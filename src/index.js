@@ -10,6 +10,7 @@ import errorResponse from './lib/error-response';
 import CustomError from './lib/custom-error';
 
 import initModels from './models/sequelize/init-models';
+import createRoutes from './routes';
 
 import consoleExpressRouting from './lib/console-express-routing';
 
@@ -24,97 +25,15 @@ app.use(errorResponse());
 app.use(openapiValidator('/api/v1/user'));
 
 app.locals.models = initModels(new Sequelize(config.get('sequelize')));
+app.locals.CustomError = CustomError;
 
-app.use('/api/v1', router);
+const routes = await createRoutes();
+await Promise.all(Object.keys(routes).map((route) => routes[route]({ app })));
+
+app.use('/api/409/error', router);
 
 app.get('*', (req, res) => {
 	res.sendFile(appRoot.resolve('static/index.html'));
-});
-
-router.post('/user', async (req, res) => {
-	const { models } = req.app.locals;
-	const { email, password } = req.body;
-
-	try {
-		const { id } = await models.user.create({ email, password });
-		const user = await models.user.findByPk(id);
-
-		res.status(201).json(user.toJSON({ exclude: [`userId`, `password`] }));
-	} catch (error) {
-		res.status(500).error(error);
-	}
-});
-
-router.get('/users', async (req, res) => {
-	const { models } = req.app.locals;
-	const { offset, limit } = req.query;
-
-	try {
-		const result = await models.user.findAndCountAll({
-			offset: offset || 0,
-			limit: limit || 10
-		});
-
-		res.status(200).json({
-			total: result.count,
-			users: result.rows.map((user) =>
-				user.toJSON({ exclude: [`userId`, `password`] })
-			)
-		});
-	} catch (error) {
-		res.status(500).error(error);
-	}
-});
-
-router.get('/user/:id', async (req, res) => {
-	const { models } = req.app.locals;
-
-	try {
-		const user = await models.user.findByPk(req.params.id, {
-			attributes: { exclude: [`password`] }
-		});
-		if (!user) throw new CustomError(404, 'Not Found');
-
-		res.status(200).json(user.toJSON({ exclude: [`userId`] }));
-	} catch (error) {
-		res.status(500).error(error);
-	}
-});
-
-router.patch('/user/:id', async (req, res) => {
-	const { models } = req.app.locals;
-	const data = req.body;
-
-	try {
-		const user = await models.user.findByPk(req.params.id, {
-			attributes: { exclude: [`password`] }
-		});
-		if (!user) throw new CustomError(404, 'Not Found');
-
-		Object.keys(data).forEach((key) => {
-			user[key] = data[key];
-		});
-		await user.save();
-
-		res.status(200).json(user.toJSON({ exclude: [`userId`] }));
-	} catch (error) {
-		res.status(500).error(error);
-	}
-});
-
-router.get('/user/id/:userId', async (req, res) => {
-	const { models } = req.app.locals;
-
-	try {
-		const user = await models.user.findByUserId(req.params.userId, {
-			attributes: { exclude: [`password`] }
-		});
-		if (!user) throw new CustomError(404, 'Not Found');
-
-		res.status(200).json(user.toJSON());
-	} catch (error) {
-		res.status(500).error(error);
-	}
 });
 
 router.get('/', (req, res) => {
@@ -130,6 +49,7 @@ router.get('/', (req, res) => {
 app.use((err, req, res, next) => {
 	res.error(err);
 });
+
 app.listen(3000, () => {
 	console.log();
 	console.log('  ♻️  Server running at:');

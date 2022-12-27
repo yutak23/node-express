@@ -18,6 +18,9 @@ module.exports = {
 		filename: '[name].js',
 		clean: true
 	},
+	experiments: {
+		topLevelAwait: true
+	},
 	module: {
 		rules: [
 			{
