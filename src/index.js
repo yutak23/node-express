@@ -5,7 +5,7 @@ import compression from 'compression';
 import Sequelize from 'sequelize';
 import config from 'config';
 import chalk from 'chalk';
-import openapiValidator from './lib/custome-openapi-validator';
+
 import errorResponse from './lib/error-response';
 import CustomError from './lib/custom-error';
 
@@ -22,7 +22,6 @@ app.use(express.static('static'));
 
 app.use(express.json());
 app.use(errorResponse());
-app.use(openapiValidator('/api/v1/user'));
 
 app.locals.models = initModels(new Sequelize(config.get('sequelize')));
 app.locals.CustomError = CustomError;

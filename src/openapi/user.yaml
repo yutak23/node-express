@@ -12,7 +12,17 @@ tags:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  '/api/v1/user/{user_id}':
+  '/api/v1/user/{id}':
+    parameters:
+      - schema:
+          type: integer
+          example: 1
+          format: int32
+          minimum: 1
+        name: id
+        in: path
+        required: true
+        description: ユーザーID
     get:
       summary: ユーザ情報取得API
       operationId: get-users-userId
@@ -45,7 +55,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      parameters: []
     patch:
       summary: ユーザ情報更新API
       operationId: patch-users-userId
@@ -112,15 +121,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    parameters:
-      - schema:
-          type: integer
-          format: int32
-          minimum: 1
-        name: user_id
-        in: path
-        required: true
-        description: ユーザーID
   /api/v1/users:
     get:
       summary: Your GET endpoint

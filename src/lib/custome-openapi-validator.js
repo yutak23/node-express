@@ -2,6 +2,7 @@ import appRoot from 'app-root-path';
 import camelcaseKeys from 'camelcase-keys';
 import * as OpenApiValidator from 'express-openapi-validator';
 import snakecaseKeys from 'snakecase-keys';
+import { strict as assert } from 'assert';
 
 const reqCaseConverter = (basePath) => (req, res, next) => {
 	if (req.originalUrl.startsWith(basePath)) {
@@ -18,12 +19,19 @@ const resCaseConverter = (basePath) => (req, res, next) => {
 	next();
 };
 
-export default (basePath) => {
+export default (options = {}) => {
+	assert.ok(options.basePath, 'options.basePath must be required');
+	assert.ok(options.apiSpec, 'options.apiSpec must be required');
+	const { basePath, apiSpec } = options;
+
 	const middleware = OpenApiValidator.middleware({
-		apiSpec: appRoot.resolve('src/openapi/user.yaml'),
+		apiSpec: appRoot.resolve(apiSpec),
 		validateRequests: true,
 		validateResponses: true,
-		ignorePaths: (p) => !p.startsWith(basePath)
+		ignorePaths: (p) => {
+			console.log(p);
+			return !p.startsWith(basePath);
+		}
 	});
 
 	middleware.push(reqCaseConverter(basePath));
