@@ -5,6 +5,7 @@ import compression from 'compression';
 import Sequelize from 'sequelize';
 import config from 'config';
 import chalk from 'chalk';
+import * as dotenv from 'dotenv';
 
 import errorResponse from './lib/error-response';
 import CustomError from './lib/custom-error';
@@ -13,6 +14,8 @@ import initModels from './models/sequelize/init-models';
 import createRoutes from './routes';
 
 import consoleExpressRouting from './lib/console-express-routing';
+
+dotenv.config();
 
 const app = express();
 const router = Router();
