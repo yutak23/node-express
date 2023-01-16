@@ -17,12 +17,18 @@ jobs:
       AWS_ACCESS_KEY_ID: dumy
       AWS_SECRET_ACCESS_KEY: dumy
       AWS_DEFAULT_REGION: local-env
+      STRIPE_KEY_SECRET: ${{ secrets.STRIPE_KEY_SECRET_TEST_MODE }}
 
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
       - name: yarn install
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: run test
         run: yarn test
