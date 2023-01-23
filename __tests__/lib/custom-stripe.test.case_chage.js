@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import customStripe from '../src/lib/custom-stripe';
+import customStripe from '../../src/lib/custom-stripe';
 
 dotenv.config();
 
@@ -12,12 +12,12 @@ describe('test for custom-stripe.js', () => {
 
 	describe('stripe.customers.$retrieve', () => {
 		test('retrieve', async () => {
-			const customerId = 'cus_MzVc08uHaCvDqX';
+			const customerId = 'cus_NBAVbB1bzvAYyn';
 			const customer = await stripe.customers.$retrieve(customerId);
 
 			expect(customer).toHaveProperty('id', customerId);
 			expect(customer).toHaveProperty('email', null);
-			expect(customer).toHaveProperty('invoicePrefix', 'FF097A4B');
+			expect(customer).toHaveProperty('invoicePrefix', '9C4AD35B');
 		});
 	});
 

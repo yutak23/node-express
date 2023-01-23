@@ -30,5 +30,6 @@
 		"separetors": "gwDNS",
 		"salt": "salt",
 		"keys": ["hoge", "foo"]
-	}
+	},
+	"stripe": { "limit": 10 }
 }

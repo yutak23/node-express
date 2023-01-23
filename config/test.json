@@ -14,5 +14,6 @@
 	"keyGenerator": {
 		"destinationAlphabet": "jrY1mUEbz6sC3t4f7d29WRMTquAcOB8aivhXGQyLIZV0KkxJnPpoHFle",
 		"separetors": "gwDNS"
-	}
+	},
+	"jest": { "timeout": 15000 }
 }
