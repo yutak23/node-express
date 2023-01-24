@@ -17,7 +17,7 @@ describe('User Model Test : validateSync', () => {
 				models.user.validateSync({});
 			};
 			expect(exec).toThrow();
-			expect(exec).toThrowError(/^must have required property 'id'$/);
+			expect(exec).toThrow(/^must have required property 'id'$/);
 		});
 
 		test("must have required property 'name'", () => {
@@ -25,7 +25,7 @@ describe('User Model Test : validateSync', () => {
 				models.user.validateSync({ id: null });
 			};
 			expect(exec).toThrow();
-			expect(exec).toThrowError(/^must have required property 'name'$/);
+			expect(exec).toThrow(/^must have required property 'name'$/);
 		});
 
 		test('id is must be string', () => {
@@ -33,7 +33,7 @@ describe('User Model Test : validateSync', () => {
 				models.user.validateSync({ id: null, name: null });
 			};
 			expect(exec).toThrow();
-			expect(exec).toThrowError(/^must be string$/);
+			expect(exec).toThrow(/^must be string$/);
 		});
 
 		test('name is must be object', () => {
@@ -41,7 +41,7 @@ describe('User Model Test : validateSync', () => {
 				models.user.validateSync({ id: 'id', name: null });
 			};
 			expect(exec).toThrow();
-			expect(exec).toThrowError(/^must be object$/);
+			expect(exec).toThrow(/^must be object$/);
 		});
 
 		test("must have required property 'fullName'", () => {
@@ -49,7 +49,7 @@ describe('User Model Test : validateSync', () => {
 				models.user.validateSync({ id: 'id', name: {} });
 			};
 			expect(exec).toThrow();
-			expect(exec).toThrowError(/^must have required property 'fullName'$/);
+			expect(exec).toThrow(/^must have required property 'fullName'$/);
 		});
 
 		test('fullName is must be string', () => {
@@ -57,7 +57,7 @@ describe('User Model Test : validateSync', () => {
 				models.user.validateSync({ id: 'id', name: { fullName: null } });
 			};
 			expect(exec).toThrow();
-			expect(exec).toThrowError(/^must be string$/);
+			expect(exec).toThrow(/^must be string$/);
 		});
 
 		test('ttl is must be integer', () => {
@@ -69,7 +69,7 @@ describe('User Model Test : validateSync', () => {
 				});
 			};
 			expect(exec).toThrow();
-			expect(exec).toThrowError(/^must be integer$/);
+			expect(exec).toThrow(/^must be integer$/);
 		});
 	});
 });

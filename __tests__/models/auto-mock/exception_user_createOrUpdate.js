@@ -16,7 +16,7 @@ describe('User Model Test : createOrUpdate', () => {
 			const createOrUpdate = models.user.createOrUpdate({});
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrowError(
+			await expect(createOrUpdate).rejects.toThrow(
 				/^must have required property 'id'$/
 			);
 		});
@@ -25,7 +25,7 @@ describe('User Model Test : createOrUpdate', () => {
 			const createOrUpdate = models.user.createOrUpdate({ id: null });
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrowError(
+			await expect(createOrUpdate).rejects.toThrow(
 				/^must have required property 'name'$/
 			);
 		});
@@ -37,7 +37,7 @@ describe('User Model Test : createOrUpdate', () => {
 			});
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrowError(/^must be string$/);
+			await expect(createOrUpdate).rejects.toThrow(/^must be string$/);
 		});
 
 		test('name is must be object', async () => {
@@ -47,7 +47,7 @@ describe('User Model Test : createOrUpdate', () => {
 			});
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrowError(/^must be object$/);
+			await expect(createOrUpdate).rejects.toThrow(/^must be object$/);
 		});
 
 		test("must have required property 'fullName'", async () => {
@@ -57,7 +57,7 @@ describe('User Model Test : createOrUpdate', () => {
 			});
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrowError(
+			await expect(createOrUpdate).rejects.toThrow(
 				/^must have required property 'fullName'$/
 			);
 		});
@@ -69,7 +69,7 @@ describe('User Model Test : createOrUpdate', () => {
 			});
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrowError(/^must be string$/);
+			await expect(createOrUpdate).rejects.toThrow(/^must be string$/);
 		});
 
 		test('ttl is must be integer', async () => {
@@ -80,7 +80,7 @@ describe('User Model Test : createOrUpdate', () => {
 			});
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrowError(/^must be integer$/);
+			await expect(createOrUpdate).rejects.toThrow(/^must be integer$/);
 		});
 	});
 });

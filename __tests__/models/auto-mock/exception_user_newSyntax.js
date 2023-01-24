@@ -16,6 +16,6 @@ describe('User Model Test : newSyntax', () => {
 			models.user.newSyntax();
 		};
 		expect(exec).toThrow();
-		expect(exec).toThrowError(/^Argument required$/);
+		expect(exec).toThrow(/^Argument required$/);
 	});
 });
