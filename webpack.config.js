@@ -2,6 +2,10 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
+const entry = { index: './src/index.js' };
+if (process.env.NODE_ENV === 'development')
+	entry.migrate = './support/migrate.js';
+
 module.exports = {
 	devtool: 'source-map',
 	target: 'node',
@@ -9,10 +13,7 @@ module.exports = {
 	externals: [nodeExternals()],
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 	name: 'node-express',
-	entry: {
-		index: './src/index.js',
-		migrate: './support/migrate.js'
-	},
+	entry,
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: '[name].js',
