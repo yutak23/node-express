@@ -3,11 +3,10 @@ FROM node:16.19.0-alpine3.16 AS builder
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-
 COPY . .
+
 RUN chmod +x ./build/app/entrypoint.sh && \
+    yarn install --frozen-lockfile && \
     yarn build && \
     mkdir for-next-stage && \
     mv build config dist src static package.json yarn.lock for-next-stage/
