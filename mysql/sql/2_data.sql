@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.7.38, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
 -- Host: localhost    Database: node-express
 -- ------------------------------------------------------
--- Server version	5.7.38-log
+-- Server version	8.0.32
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -37,7 +37,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'sample@example.com','$2b$10$TwChyVsthbPloc6i827be.snzGQ2fwUqROP6F8NdoLJ/dwUo4YaxS','2022-06-20 12:49:51','2022-06-20 09:25:43'),(2,'test@example.com','$2b$10$SxeSXl8tdxfP4q.q.4MSO.zyBcfoSJ/2dPLGeOLSbFOuBLI2FnP.2','2022-06-20 18:28:21','2022-06-20 09:28:35');
+INSERT INTO `users` VALUES (1,'sample@example.com','$2b$10$TwChyVsthbPloc6i827be.snzGQ2fwUqROP6F8NdoLJ/dwUo4YaxS','sample 太郎','2022-06-20 12:49:51','2022-06-20 00:25:43'),(2,'test@example.com','$2b$10$SxeSXl8tdxfP4q.q.4MSO.zyBcfoSJ/2dPLGeOLSbFOuBLI2FnP.2','山田 太郎','2022-06-20 18:28:21','2022-06-20 00:28:35');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-20 18:28:40
+-- Dump completed on 2023-02-20 10:57:13
