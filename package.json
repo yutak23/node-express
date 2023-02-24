@@ -1,6 +1,6 @@
 {
 	"name": "node-express",
-	"description": "My webpack project",
+	"description": "node express project",
 	"version": "1.0.0",
 	"main": "index.js",
 	"repository": "git@github.com:yuta-katayama-23/node-express.git",
