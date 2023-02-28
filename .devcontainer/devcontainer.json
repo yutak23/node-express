@@ -1,0 +1,17 @@
+{
+	"name": "Node.js",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-18",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"upgradePackages": true,
+			"version": "latest",
+			"enableNonRootDocker": "true",
+			"moby": "true"
+		}
+	},
+	"appPort": ["3000:3000", "3306:3306"],
+	"postCreateCommand": "yarn install",
+	"customizations": {
+		"vscode": { "extensions": ["esbenp.prettier-vscode"] }
+	}
+}
