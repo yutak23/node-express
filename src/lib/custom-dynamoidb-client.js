@@ -1,3 +1,4 @@
+import { strict as assert } from 'assert';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import {
 	DynamoDBDocumentClient,
@@ -6,7 +7,6 @@ import {
 	DeleteCommand
 } from '@aws-sdk/lib-dynamodb';
 
-import { strict as assert } from 'assert';
 import snakecaseKeys from 'snakecase-keys';
 import camelcaseKeys from 'camelcase-keys';
 

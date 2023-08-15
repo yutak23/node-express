@@ -1,7 +1,7 @@
-import anyBase from 'any-base';
-import config from 'config';
 import crypto from 'crypto';
 import { strict as assert } from 'assert';
+import anyBase from 'any-base';
+import config from 'config';
 import { uniq } from 'lodash';
 
 const sha256hash = (buffer, salt) =>

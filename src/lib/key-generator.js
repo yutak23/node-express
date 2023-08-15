@@ -1,9 +1,9 @@
+import crypto from 'crypto';
+import { strict as assert } from 'assert';
 import anyBase from 'any-base';
 import config from 'config';
 import { uniq } from 'lodash';
-import crypto from 'crypto';
 import { customAlphabet } from 'nanoid';
-import { strict as assert } from 'assert';
 
 const sha256hash = (buffer, salt) =>
 	crypto.createHash('sha256').update(`${salt}:${buffer}`).digest('hex');

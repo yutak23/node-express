@@ -1,5 +1,5 @@
-import Stripe from 'stripe';
 import { strict as assert } from 'assert';
+import Stripe from 'stripe';
 import snakecaseKeys from 'snakecase-keys';
 import camelcaseKeys from 'camelcase-keys';
 import config from 'config';

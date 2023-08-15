@@ -1,8 +1,8 @@
+import { strict as assert } from 'assert';
 import appRoot from 'app-root-path';
 import camelcaseKeys from 'camelcase-keys';
 import * as OpenApiValidator from 'express-openapi-validator';
 import snakecaseKeys from 'snakecase-keys';
-import { strict as assert } from 'assert';
 
 const reqCaseConverter = (basePath) => (req, res, next) => {
 	if (req.originalUrl.startsWith(basePath)) {
