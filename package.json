@@ -58,8 +58,10 @@
 		"npm-check-updates": "^16.11.1",
 		"prettier": "^3.0.1",
 		"regenerator-runtime": "^0.14.0",
+		"sequelize-auto": "^0.8.8",
 		"sequelize-cli": "^6.6.1",
 		"simple-git-hooks": "^2.9.0",
+		"vite-node": "^0.34.3",
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4",
 		"webpack-node-externals": "^3.0.0"
@@ -69,7 +71,7 @@
 		"build": "webpack --node-env=production",
 		"debug": "webpack --node-env=development",
 		"start:watch": "nodemon dist/index.js",
-		"lint": "eslint src/",
+		"lint": "eslint .",
 		"test": "jest",
 		"ncu": "npx npm-check-updates",
 		"mysqldump:full": "docker exec -t mysql mysqldump -u root --databases node-express > ./mysql/sql/full.sql",
@@ -78,6 +80,7 @@
 		"create:table": "aws dynamodb create-table --cli-input-json file://./commands/create-table.json --endpoint-url http://localhost:8000",
 		"db:migrate": "npx sequelize-cli db:migrate",
 		"migration:generate": "npx sequelize-cli migration:generate",
+		"models": "rm -rf ./src/models-auto/*.js && npx vite-node ./support/sequelize-auto.js && npx eslint --fix ./src/models-auto/* && npx prettier --ignore-unknown --write ./src/models-auto/*",
 		"prepare": "npx simple-git-hooks"
 	},
 	"lint-staged": {

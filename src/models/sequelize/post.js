@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 
 const { Model, Sequelize } = _sequelize;
 
-export default class user extends Model {
+export default class post extends Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
@@ -13,24 +13,25 @@ export default class user extends Model {
 					allowNull: false,
 					primaryKey: true
 				},
-				email: {
-					type: DataTypes.STRING(128),
-					allowNull: false,
-					unique: 'idx_email'
-				},
-				password: {
-					type: DataTypes.CHAR(60),
+				title: {
+					type: DataTypes.STRING(64),
 					allowNull: false
 				},
-				firstName: {
-					type: DataTypes.STRING(128),
+				like: {
+					type: DataTypes.INTEGER.UNSIGNED,
 					allowNull: true,
-					field: 'first_name'
+					defaultValue: 0
 				},
-				lastName: {
-					type: DataTypes.STRING(128),
-					allowNull: true,
-					field: 'last_name'
+				enabled: {
+					type: DataTypes.TINYINT,
+					allowNull: false,
+					defaultValue: 1,
+					get() {
+						return !!this.getDataValue('createdAt');
+					},
+					set(v) {
+						this.setDataValue('enabled', v ? 1 : 0);
+					}
 				},
 				createdAt: {
 					type: DataTypes.DATE,
@@ -61,18 +62,11 @@ export default class user extends Model {
 						);
 					},
 					field: 'updated_at'
-				},
-				fullName: {
-					type: DataTypes.VIRTUAL,
-					get() {
-						return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`;
-					},
-					field: 'full_name'
 				}
 			},
 			{
 				sequelize,
-				tableName: 'users',
+				tableName: 'posts',
 				timestamps: false,
 				indexes: [
 					{
@@ -80,12 +74,6 @@ export default class user extends Model {
 						unique: true,
 						using: 'BTREE',
 						fields: [{ name: 'id' }]
-					},
-					{
-						name: 'idx_email',
-						unique: true,
-						using: 'BTREE',
-						fields: [{ name: 'email' }]
 					}
 				]
 			}

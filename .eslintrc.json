@@ -10,6 +10,9 @@
 		"plugin:jest/recommended",
 		"prettier"
 	],
-	"rules": { "no-console": "off" },
-	"ignorePatterns": ["/node_modules/", "/dist/", "/openapi/", "/static/"]
+	"rules": {
+		"no-console": "off",
+		"import/no-extraneous-dependencies": ["error", { "packageDir": "./" }]
+	},
+	"ignorePatterns": ["/node_modules/", "/dist/", "/openapi/", "/static/", "/data/"]
 }
