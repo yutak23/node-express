@@ -1,6 +1,9 @@
+import { strict as assert } from 'assert';
 import _sequelize from 'sequelize';
 import { DateTime } from 'luxon';
+import bcrypt from 'bcrypt';
 
+const encrypt = (v) => bcrypt.hashSync(v, 10);
 const { Model, Sequelize } = _sequelize;
 
 export default class user extends Model {
@@ -20,7 +23,10 @@ export default class user extends Model {
 				},
 				password: {
 					type: DataTypes.CHAR(60),
-					allowNull: false
+					allowNull: false,
+					set(v) {
+						this.setDataValue('password', encrypt(v));
+					}
 				},
 				firstName: {
 					type: DataTypes.STRING(128),
@@ -90,6 +96,21 @@ export default class user extends Model {
 				]
 			}
 		);
+	}
+
+	findByEmailPassword(email, password) {
+		assert.ok(email, 'email is required');
+		assert.ok(password, 'password is required');
+
+		return this.findOne({
+			where: {
+				email,
+				password: encrypt(password)
+			},
+			attributes: {
+				exclude: ['password']
+			}
+		});
 	}
 
 	toJSON(options = {}) {

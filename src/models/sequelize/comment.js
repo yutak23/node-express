@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 
 const { Model, Sequelize } = _sequelize;
 
-export default class post extends Model {
+export default class comment extends Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
@@ -13,32 +13,27 @@ export default class post extends Model {
 					allowNull: false,
 					primaryKey: true
 				},
-				title: {
-					type: DataTypes.STRING(64),
-					allowNull: false
-				},
-				likeCount: {
+				postId: {
 					type: DataTypes.INTEGER.UNSIGNED,
-					allowNull: true,
-					defaultValue: 0,
-					field: 'like_count'
-				},
-				commentCount: {
-					type: DataTypes.INTEGER.UNSIGNED,
-					allowNull: true,
-					defaultValue: 0,
-					field: 'comment_count'
-				},
-				enabled: {
-					type: DataTypes.TINYINT,
 					allowNull: false,
-					defaultValue: 1,
-					get() {
-						return !!this.getDataValue('createdAt');
+					references: {
+						model: 'posts',
+						key: 'id'
 					},
-					set(v) {
-						this.setDataValue('enabled', v ? 1 : 0);
-					}
+					field: 'post_id'
+				},
+				userId: {
+					type: DataTypes.INTEGER.UNSIGNED,
+					allowNull: false,
+					references: {
+						model: 'users',
+						key: 'id'
+					},
+					field: 'user_id'
+				},
+				content: {
+					type: DataTypes.STRING(256),
+					allowNull: false
 				},
 				createdAt: {
 					type: DataTypes.DATE,
@@ -73,7 +68,7 @@ export default class post extends Model {
 			},
 			{
 				sequelize,
-				tableName: 'posts',
+				tableName: 'comments',
 				timestamps: false,
 				indexes: [
 					{
@@ -81,6 +76,16 @@ export default class post extends Model {
 						unique: true,
 						using: 'BTREE',
 						fields: [{ name: 'id' }]
+					},
+					{
+						name: 'comments_ibfk_1_idx',
+						using: 'BTREE',
+						fields: [{ name: 'post_id' }]
+					},
+					{
+						name: 'comments_ibfk_2_idx',
+						using: 'BTREE',
+						fields: [{ name: 'user_id' }]
 					}
 				]
 			}
