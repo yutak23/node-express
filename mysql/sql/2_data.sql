@@ -32,12 +32,39 @@ INSERT INTO `SequelizeMeta` VALUES ('20220615021048-create-user.js'),('202206152
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `likes`
+--
+
+LOCK TABLES `likes` WRITE;
+/*!40000 ALTER TABLE `likes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `likes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `posts`
+--
+
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `users`
 --
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'sample@example.com','$2b$10$TwChyVsthbPloc6i827be.snzGQ2fwUqROP6F8NdoLJ/dwUo4YaxS','sample 太郎','2022-06-20 12:49:51','2022-06-20 00:25:43'),(2,'test@example.com','$2b$10$SxeSXl8tdxfP4q.q.4MSO.zyBcfoSJ/2dPLGeOLSbFOuBLI2FnP.2','山田 太郎','2022-06-20 18:28:21','2022-06-20 00:28:35');
+INSERT INTO `users` VALUES (1,'sample@example.com','$2b$10$VUhIqhauThFxYf7YYLyA8eZGd/pbbWv6WrflW/NqjYxWkTCtg1x/K','太郎','sample','2022-06-20 12:49:51','2023-10-06 04:04:50'),(2,'test@example.com','$2b$10$VUhIqhauThFxYf7YYLyA8eZGd/pbbWv6WrflW/NqjYxWkTCtg1x/K','太郎','山田','2022-06-20 18:28:21','2023-10-06 04:04:50');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +77,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-20 10:57:13
+-- Dump completed on 2023-10-06 13:07:43
