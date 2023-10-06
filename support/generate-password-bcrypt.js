@@ -1,4 +1,5 @@
-const bcrypt = require('bcrypt');
+const config = require('config');
+const sha256 = require('crypto-js/sha256');
 const { program } = require('commander');
 
 program
@@ -8,9 +9,9 @@ program
 
 const options = program.opts();
 
-const encrypt = (v) => bcrypt.hashSync(v, 10);
+const encrypt = (v) => sha256(`${v}:${config.get('crypto.salt')}`).toString();
 
 console.log({
 	input: options.password,
-	'bcrypt-hash': encrypt(options.password)
+	'password-hash': encrypt(options.password)
 });

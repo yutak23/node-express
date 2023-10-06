@@ -6,6 +6,11 @@ import Sequelize from 'sequelize';
 import config from 'config';
 import chalk from 'chalk';
 import * as dotenv from 'dotenv';
+import authBearerParser from 'auth-bearer-parser';
+
+import expressSession from 'express-session';
+import RedisStore from 'connect-redis';
+import Redis from 'ioredis';
 
 import errorResponse from './lib/error-response';
 import CustomError from './lib/custom-error';
@@ -20,13 +25,27 @@ dotenv.config();
 const app = express();
 const router = Router();
 
+app.use(errorResponse());
 app.use(compression({ level: 1, memLevel: 3 }));
 app.use(express.static('static'));
 
 app.use(express.json());
-app.use(errorResponse());
+app.use(express.urlencoded({ extended: true }));
+app.use(authBearerParser());
 
-app.locals.models = initModels(new Sequelize(config.get('sequelize')));
+const redis = new Redis(config.get('redis.session'));
+const store = new RedisStore({ client: redis });
+app.use(
+	expressSession({
+		...config.get('session'),
+		secret: process.env.COOKIE_SECRET,
+		store
+	})
+);
+
+const sequelize = new Sequelize(config.get('sequelize'));
+app.locals.sequelize = sequelize;
+app.locals.models = initModels(sequelize);
 app.locals.CustomError = CustomError;
 
 const routes = await createRoutes();

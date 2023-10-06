@@ -22,6 +22,15 @@ services:
       - ./data/mysql:/var/lib/mysql
       - ./mysql/sql:/docker-entrypoint-initdb.d
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  redis:
+    image: redis:6.2.6-alpine3.15
+    container_name: redis
+    environment:
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - 6379:6379
   # アプリケーション側では使っていない（結合テストを試してみたかった時に使っていた）
   # dynamodb-local:
   #   command: -jar DynamoDBLocal.jar -sharedDb -dbPath ./data
@@ -33,13 +42,3 @@ services:
   #     - './data/dynamodb:/home/dynamodblocal/data'
   #   working_dir: /home/dynamodblocal
   #   user: root
-  # アプリケーション側では使っていない（Redisのクライアントioredisのコネクション確認で使っていた）
-  # redis:
-  #   image: redis:6.2.6-alpine3.15
-  #   container_name: redis
-  #   environment:
-  #     TZ: 'Asia/Tokyo'
-  #   volumes:
-  #     - ./data/redis:/data
-  #   ports:
-  #     - 6379:6379

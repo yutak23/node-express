@@ -1,9 +1,10 @@
 import { strict as assert } from 'assert';
 import _sequelize from 'sequelize';
 import { DateTime } from 'luxon';
-import bcrypt from 'bcrypt';
+import config from 'config';
+import sha256 from 'crypto-js/sha256';
 
-const encrypt = (v) => bcrypt.hashSync(v, 10);
+const encrypt = (v) => sha256(`${v}:${config.get('crypto.salt')}`).toString();
 const { Model, Sequelize } = _sequelize;
 
 export default class user extends Model {
@@ -98,7 +99,7 @@ export default class user extends Model {
 		);
 	}
 
-	findByEmailPassword(email, password) {
+	static findByEmailPassword(email, password) {
 		assert.ok(email, 'email is required');
 		assert.ok(password, 'password is required');
 
