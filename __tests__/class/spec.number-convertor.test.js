@@ -28,8 +28,7 @@ describe('NumberConvertor class test', () => {
 			});
 
 			for (let i = 0; i < 10000; i += 1) {
-				const expected =
-					Math.floor(Math.random() * (10 * Math.random() * 1000)) + 1;
+				const expected = Math.floor(Math.random() * (10 * Math.random() * 1000)) + 1;
 
 				const encrypted = numberConvertor.encrypting(expected);
 				const decrypted = numberConvertor.decrypting(encrypted);

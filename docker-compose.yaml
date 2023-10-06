@@ -1,14 +1,14 @@
 version: '3.9'
 services:
-  app:
-    image: node:18.14.0-alpine
-    container_name: node-express
-    command: sh -c "yarn install && yarn dev"
-    ports:
-      - 3000:3000
-    working_dir: /app
-    volumes:
-      - ./:/app
+  # app:
+  #   image: node:18.14.0-alpine
+  #   container_name: node-express
+  #   command: sh -c "yarn install && yarn dev"
+  #   ports:
+  #     - 3000:3000
+  #   working_dir: /app
+  #   volumes:
+  #     - ./:/app
   mysql:
     image: mysql:8.0.32
     container_name: mysql

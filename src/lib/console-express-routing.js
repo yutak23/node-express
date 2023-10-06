@@ -16,10 +16,7 @@ const visibleMethods = Object.keys(methodsColors);
 const prepareMethods = (methods) =>
 	methods
 		.filter((method) => visibleMethods.includes(method))
-		.sort(
-			(first, second) =>
-				visibleMethods.indexOf(first) - visibleMethods.indexOf(second)
-		)
+		.sort((first, second) => visibleMethods.indexOf(first) - visibleMethods.indexOf(second))
 		.map((method) => chalk[methodsColors[method] || 'default'](method))
 		.join(', ');
 
@@ -66,9 +63,7 @@ export default (options = {}) => {
 	} = options;
 	const routingList = {};
 
-	const routerStacks = layers.filter(
-		(layer) => layer.handle.stack && layer.name === 'router'
-	);
+	const routerStacks = layers.filter((layer) => layer.handle.stack && layer.name === 'router');
 	const routeLayers = layers.filter((layer) => layer.route);
 
 	routerStacks.forEach((routerStack) => {
@@ -84,14 +79,10 @@ export default (options = {}) => {
 			} = stack;
 
 			if (routingList[`${basePath}${path}`]) {
-				routingList[`${basePath}${path}`].push(
-					toUpper(Object.keys(methods).shift())
-				);
+				routingList[`${basePath}${path}`].push(toUpper(Object.keys(methods).shift()));
 				return;
 			}
-			routingList[`${basePath}${path}`] = [
-				toUpper(Object.keys(methods).shift())
-			];
+			routingList[`${basePath}${path}`] = [toUpper(Object.keys(methods).shift())];
 		});
 	});
 

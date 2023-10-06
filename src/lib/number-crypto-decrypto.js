@@ -26,26 +26,19 @@ export default class NumberCryptoDecrypto {
 			16
 		);
 
-		this.separetors = (
-			options.separetors || config.get('crypto.separetors')
-		).split('');
+		this.separetors = (options.separetors || config.get('crypto.separetors')).split('');
 
 		this.hexToShort = anyBase(anyBase.HEX, this.seed);
 		this.shortToHex = anyBase(this.seed, anyBase.HEX);
 	}
 
 	encrypting(number) {
-		if (typeof number !== 'number')
-			throw new Error(`arg must be number value.`);
+		if (typeof number !== 'number') throw new Error(`arg must be number value.`);
 
 		const iv = crypto.randomBytes(16);
 		const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
 
-		let encrypted = cipher.update(
-			number.toString(),
-			this.inputEncoding,
-			this.outputEncoding
-		);
+		let encrypted = cipher.update(number.toString(), this.inputEncoding, this.outputEncoding);
 		encrypted += cipher.final('hex');
 
 		const separetor = this.separetors[number % this.separetors.length];
@@ -56,25 +49,15 @@ export default class NumberCryptoDecrypto {
 
 	decrypting(encryptedAndIv) {
 		try {
-			const values = encryptedAndIv.split(
-				new RegExp(`[${this.separetors.join('')}]`)
-			);
+			const values = encryptedAndIv.split(new RegExp(`[${this.separetors.join('')}]`));
 
 			// 元の数値が16進数16Bytes（32桁）
 			const numberHex = pad(this.shortToHex(values[0]), 32, '0');
 			const ivHex = pad(this.shortToHex(values[1]), 32, '0');
 
-			const decipher = crypto.createDecipheriv(
-				this.algorithm,
-				this.key,
-				Buffer.from(ivHex, 'hex')
-			);
+			const decipher = crypto.createDecipheriv(this.algorithm, this.key, Buffer.from(ivHex, 'hex'));
 
-			let decrypted = decipher.update(
-				numberHex,
-				this.outputEncoding,
-				this.inputEncoding
-			);
+			let decrypted = decipher.update(numberHex, this.outputEncoding, this.inputEncoding);
 			decrypted += decipher.final(this.inputEncoding);
 
 			return decrypted;

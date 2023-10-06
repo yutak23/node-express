@@ -14,14 +14,9 @@ export default class NumberConvertor {
 
 	constructor(options = {}) {
 		this.destinationAlphabet = options.destinationAlphabet || anyBase.HEX;
-		this.separetors = (
-			options.separetors || config.get('numberConvertor.separetors')
-		).split('');
+		this.separetors = (options.separetors || config.get('numberConvertor.separetors')).split('');
 
-		if (
-			uniq(this.destinationAlphabet.split('')).length !==
-			this.destinationAlphabet.length
-		)
+		if (uniq(this.destinationAlphabet.split('')).length !== this.destinationAlphabet.length)
 			throw new Error(`destinationAlphabet must not be duplicate`);
 
 		this.encode = anyBase(anyBase.DEC, this.destinationAlphabet);

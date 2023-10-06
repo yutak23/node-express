@@ -3,8 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const entry = { index: './src/index.js' };
-if (process.env.NODE_ENV === 'development')
-	entry.migrate = './support/migrate.js';
+if (process.env.NODE_ENV === 'development') entry.migrate = './support/migrate.js';
 
 module.exports = {
 	devtool: 'source-map',

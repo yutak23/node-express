@@ -72,7 +72,7 @@
 		"debug": "webpack --node-env=development",
 		"start:watch": "nodemon dist/index.js",
 		"lint": "eslint .",
-		"format": "prettier --ignore-unknown --write ./",
+		"format": "prettier --ignore-unknown --write . '!./data'",
 		"test": "jest",
 		"ncu": "npm-check-updates",
 		"mysqldump:full": "docker exec -t mysql mysqldump -u root --databases node-express > ./mysql/sql/full.sql",

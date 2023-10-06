@@ -35,8 +35,7 @@ export default class User extends BaseModel {
 	// 同期的な処理でのエラー検証用のメソッド
 	validateSync(item) {
 		// ajv default options of 'allErrors' is false
-		if (!this.validateSchema(item))
-			throw new Error(this.validateSchema.errors.shift().message);
+		if (!this.validateSchema(item)) throw new Error(this.validateSchema.errors.shift().message);
 
 		return this;
 	}

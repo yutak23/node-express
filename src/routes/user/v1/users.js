@@ -14,9 +14,7 @@ router.get('/', async (req, res) => {
 
 		res.status(200).json({
 			total: result.count,
-			users: result.rows.map((user) =>
-				user.toJSON({ exclude: [`userId`, `password`] })
-			)
+			users: result.rows.map((user) => user.toJSON({ exclude: [`userId`, `password`] }))
 		});
 	} catch (error) {
 		res.status(500).error(error);

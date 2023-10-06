@@ -21,16 +21,9 @@ describe('NumberCryptoDecrypto class test', () => {
 			});
 
 			expect(numberCryptoDecrypto).toHaveProperty('seed', seed);
-			expect(numberCryptoDecrypto).toHaveProperty(
-				'separetors',
-				separetors.split('')
-			);
-			expect(numberCryptoDecrypto.separetors).toEqual(
-				expect.arrayContaining(separetors.split(''))
-			);
-			expect(numberCryptoDecrypto.key.toString('hex')).toBe(
-				'745731af4484f323968969eda289aeee'
-			);
+			expect(numberCryptoDecrypto).toHaveProperty('separetors', separetors.split(''));
+			expect(numberCryptoDecrypto.separetors).toEqual(expect.arrayContaining(separetors.split('')));
+			expect(numberCryptoDecrypto.key.toString('hex')).toBe('745731af4484f323968969eda289aeee');
 		});
 
 		test('seed contains separators string', async () => {

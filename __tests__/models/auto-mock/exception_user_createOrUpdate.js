@@ -16,18 +16,14 @@ describe('User Model Test : createOrUpdate', () => {
 			const createOrUpdate = models.user.createOrUpdate({});
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrow(
-				/^must have required property 'id'$/
-			);
+			await expect(createOrUpdate).rejects.toThrow(/^must have required property 'id'$/);
 		});
 
 		test("must have required property 'name'", async () => {
 			const createOrUpdate = models.user.createOrUpdate({ id: null });
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrow(
-				/^must have required property 'name'$/
-			);
+			await expect(createOrUpdate).rejects.toThrow(/^must have required property 'name'$/);
 		});
 
 		test('id is must be string', async () => {
@@ -57,9 +53,7 @@ describe('User Model Test : createOrUpdate', () => {
 			});
 
 			await expect(createOrUpdate).rejects.toThrow();
-			await expect(createOrUpdate).rejects.toThrow(
-				/^must have required property 'fullName'$/
-			);
+			await expect(createOrUpdate).rejects.toThrow(/^must have required property 'fullName'$/);
 		});
 
 		test('fullName is must be string', async () => {

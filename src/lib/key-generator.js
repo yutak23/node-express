@@ -17,19 +17,12 @@ export default class KeyGenerator {
 
 	constructor(options = {}) {
 		this.destinationAlphabet = options.destinationAlphabet || anyBase.HEX;
-		this.separetors = (
-			options.separetors || config.get('numberConvertor.separetors')
-		).split('');
+		this.separetors = (options.separetors || config.get('numberConvertor.separetors')).split('');
 
-		if (
-			uniq(this.destinationAlphabet.split('')).length !==
-			this.destinationAlphabet.length
-		)
+		if (uniq(this.destinationAlphabet.split('')).length !== this.destinationAlphabet.length)
 			throw new Error(`destinationAlphabet must not be duplicate`);
 
-		this.nanoid = customAlphabet(
-			this.destinationAlphabet.split('').sort().join('')
-		);
+		this.nanoid = customAlphabet(this.destinationAlphabet.split('').sort().join(''));
 		this.encode = anyBase(anyBase.DEC, this.destinationAlphabet);
 		this.decode = anyBase(this.destinationAlphabet, anyBase.DEC);
 
@@ -39,9 +32,7 @@ export default class KeyGenerator {
 
 	create(options = { hoge: false, foo: false }) {
 		const randomKey = this.nanoid(this.lengthOfOneKey * 3);
-		const encodedReversible = this.encode(
-			this.#flagToNumber(options).toString()
-		);
+		const encodedReversible = this.encode(this.#flagToNumber(options).toString());
 		const checksum = this.getChecksum(encodedReversible, 4);
 
 		return `${randomKey}${encodedReversible}${checksum}`
@@ -66,8 +57,7 @@ export default class KeyGenerator {
 
 		const bitArray = [];
 		Object.keys(options).forEach((key, index) => {
-			if (key !== this.optionKeys[index])
-				throw new Error(`must mutch key order`);
+			if (key !== this.optionKeys[index]) throw new Error(`must mutch key order`);
 
 			if (options[key]) return bitArray.push(1);
 			return bitArray.push(0);
@@ -75,9 +65,7 @@ export default class KeyGenerator {
 		const number = parseInt(bitArray.join('').toString(), 2);
 
 		if (number > this.destinationAlphabet.length)
-			throw new Error(
-				`must be less than destinationAlphabet.lenght because number base`
-			);
+			throw new Error(`must be less than destinationAlphabet.lenght because number base`);
 		return number;
 	}
 

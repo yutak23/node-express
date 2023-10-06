@@ -137,57 +137,38 @@ describe('test for custom-stripe.js', () => {
 
 	describe('stripe.customers.$listPaymentMethods', () => {
 		test('no options', async () => {
-			const paymentMethods = await stripe.customers.$listPaymentMethods(
-				'cus_NBAVbB1bzvAYyn'
-			);
+			const paymentMethods = await stripe.customers.$listPaymentMethods('cus_NBAVbB1bzvAYyn');
 
-			expect(paymentMethods).toHaveProperty(
-				'[0].id',
-				data.paymentMethodIds.second
-			);
-			expect(paymentMethods).toHaveProperty(
-				'[1].id',
-				data.paymentMethodIds.first
-			);
+			expect(paymentMethods).toHaveProperty('[0].id', data.paymentMethodIds.second);
+			expect(paymentMethods).toHaveProperty('[1].id', data.paymentMethodIds.first);
 			expect(paymentMethods).toHaveLength(2);
 		});
 
 		test('limit 1', async () => {
-			const paymentMethods = await stripe.customers.$listPaymentMethods(
-				'cus_NBAVbB1bzvAYyn',
-				{ limit: 1 }
-			);
+			const paymentMethods = await stripe.customers.$listPaymentMethods('cus_NBAVbB1bzvAYyn', {
+				limit: 1
+			});
 
 			expect(paymentMethods).toHaveLength(1);
 		});
 
 		test('limit 1 and offset 1', async () => {
-			const paymentMethods = await stripe.customers.$listPaymentMethods(
-				'cus_NBAVbB1bzvAYyn',
-				{ limit: 1, offset: 1 }
-			);
+			const paymentMethods = await stripe.customers.$listPaymentMethods('cus_NBAVbB1bzvAYyn', {
+				limit: 1,
+				offset: 1
+			});
 
-			expect(paymentMethods).toHaveProperty(
-				'[0].id',
-				data.paymentMethodIds.first
-			);
+			expect(paymentMethods).toHaveProperty('[0].id', data.paymentMethodIds.first);
 			expect(paymentMethods).toHaveLength(1);
 		});
 
 		test('stripeAccount', async () => {
-			const paymentMethods = await stripe.customers.$listPaymentMethods(
-				'cus_NCiXY6X4rpmuHd',
-				{ stripeAccount: 'acct_1MSJ014IT6MHHPbU' }
-			);
+			const paymentMethods = await stripe.customers.$listPaymentMethods('cus_NCiXY6X4rpmuHd', {
+				stripeAccount: 'acct_1MSJ014IT6MHHPbU'
+			});
 
-			expect(paymentMethods).toHaveProperty(
-				'[0].id',
-				data.connectPaymentMethodIds.second
-			);
-			expect(paymentMethods).toHaveProperty(
-				'[1].id',
-				data.connectPaymentMethodIds.first
-			);
+			expect(paymentMethods).toHaveProperty('[0].id', data.connectPaymentMethodIds.second);
+			expect(paymentMethods).toHaveProperty('[1].id', data.connectPaymentMethodIds.first);
 			expect(paymentMethods).toHaveLength(2);
 		});
 
@@ -208,10 +189,7 @@ describe('test for custom-stripe.js', () => {
 				{ stripeAccount: 'acct_1MSJ014IT6MHHPbU' }
 			);
 
-			expect(paymentMethods).toHaveProperty(
-				'[0].id',
-				data.connectPaymentMethodIds.first
-			);
+			expect(paymentMethods).toHaveProperty('[0].id', data.connectPaymentMethodIds.first);
 			expect(paymentMethods).toHaveLength(1);
 		});
 	});
