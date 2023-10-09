@@ -11,8 +11,12 @@
 		"dialect": "mysql",
 		"timezone": "+09:00",
 		"pool": {
-			"min": 1
-		}
+			"min": 1,
+			"max": 5,
+			"acquire": 30000,
+			"idle": 10000
+		},
+		"logging": false
 	},
 	"redis": {
 		"session": {

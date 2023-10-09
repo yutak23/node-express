@@ -28,10 +28,7 @@ export default (options = {}) => {
 		apiSpec: appRoot.resolve(apiSpec),
 		validateRequests: true,
 		validateResponses: true,
-		ignorePaths: (p) => {
-			console.log(p);
-			return !p.startsWith(basePath);
-		}
+		ignorePaths: (p) => !p.startsWith(basePath)
 	});
 
 	middleware.push(reqCaseConverter(basePath));

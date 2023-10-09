@@ -22,10 +22,11 @@ router.post('/:postId/comment', verifyAccess(), async (req, res) => {
 
 	const transaction = await sequelize.transaction();
 	try {
-		const post = await models.post.findOne(
-			{ where: { id: postId, enabled: 1 } },
-			{ lock: true, transaction }
-		);
+		const post = await models.post.findOne({
+			where: { id: postId, enabled: 1 },
+			lock: true,
+			transaction
+		});
 		if (!post) throw new CustomError(404, 'data not Found');
 
 		const { id } = await models.comment.create(
@@ -43,6 +44,7 @@ router.post('/:postId/comment', verifyAccess(), async (req, res) => {
 
 		res.status(200).json(comment.toJSON());
 	} catch (error) {
+		console.log(error);
 		await transaction.rollback();
 		res.status(500).error(error);
 	}
